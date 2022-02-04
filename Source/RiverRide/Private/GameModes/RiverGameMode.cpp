@@ -3,3 +3,6 @@
 
 #include "GameModes/RiverGameMode.h"
 
+ARiverGameMode::ARiverGameMode() {
+
+}

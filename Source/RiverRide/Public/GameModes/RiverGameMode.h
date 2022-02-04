@@ -13,5 +13,9 @@ UCLASS()
 class RIVERRIDE_API ARiverGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+
+	ARiverGameMode();
 	
 };

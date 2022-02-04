@@ -16,6 +16,17 @@ void ARiverPickupSpawnerActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FVector Location = FVector(0.0f, 0.0f, 0.0);
+	FRotator Rotation = FRotator(0.0f, 0.0f, 0.0f);
+	FActorSpawnParameters SpawnParameters;
+
+	if (RiverPickupActorTemplate)
+	{
+		GetWorld()->SpawnActor<ARiverPickupActor>(RiverPickupActorTemplate, Location, Rotation, SpawnParameters);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("ARiverPickupSpawnerActor::BeginPlay - RiverActorTemplate is null. Please define the property in the UE editor"));
+	}
 }
 
 // Called every frame
