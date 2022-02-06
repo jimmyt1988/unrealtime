@@ -14,4 +14,12 @@ class RIVERRIDE_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+
+	AMainPlayerController();
+
+	void SetupInputComponent() override;
+
+	UFUNCTION(Category = "Custom")
+		void MovementAxisEvent(float AxisValue);
 };

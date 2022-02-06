@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Actors/RiverPickupActor.h"
+#include "Actors/RiverActor.h"
 #include "RiverPickupSpawnerActor.generated.h"
 
 UCLASS()
@@ -24,7 +25,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// The type that represents the blueprint we want to spawn instances of
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Custom")
 		TSubclassOf<ARiverPickupActor> RiverPickupActorTemplate;
 
+	// How many should we initially spawn
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Custom")
+		int InitialSpawnAmount;
+
+	// Reference to RiverActor that provides info on where to spawn the river pickups
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Custom")
+		ARiverActor* RiverActor;
 };

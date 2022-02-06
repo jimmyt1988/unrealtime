@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Actors/RiverActor.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -25,5 +27,12 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// Reference to RiverActor that provides info on where the spline is that we are moving across
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Custom")
+		ARiverActor* RiverActor;
+
+	UFUNCTION(Category = "Custom")
+		void Move(float AxisValue);
 
 };

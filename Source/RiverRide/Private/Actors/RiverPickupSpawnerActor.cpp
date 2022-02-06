@@ -6,7 +6,7 @@
 // Sets default values
 ARiverPickupSpawnerActor::ARiverPickupSpawnerActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -15,14 +15,30 @@ ARiverPickupSpawnerActor::ARiverPickupSpawnerActor()
 void ARiverPickupSpawnerActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	FVector Location = FVector(0.0f, 0.0f, 0.0);
-	FRotator Rotation = FRotator(0.0f, 0.0f, 0.0f);
-	FActorSpawnParameters SpawnParameters;
+
 
 	if (RiverPickupActorTemplate)
 	{
-		GetWorld()->SpawnActor<ARiverPickupActor>(RiverPickupActorTemplate, Location, Rotation, SpawnParameters);
+		if (InitialSpawnAmount == 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ARiverPickupSpawnerActor::BeginPlay - InitialSpawnAmount should be greater than 0. Please define the property in the UE editor"));
+		}
+
+		if (RiverActor) {
+			float StartingLocationOfSpline = 0.0f;
+			FVector Location = RiverActor->SplineComponent->GetWorldLocationAtDistanceAlongSpline(StartingLocationOfSpline);
+			FRotator Rotation = RiverActor->SplineComponent->GetWorldRotationAtDistanceAlongSpline(StartingLocationOfSpline);
+			FActorSpawnParameters SpawnParameters;
+
+			for (int I = 0; I < InitialSpawnAmount; I++)
+			{
+				ARiverPickupActor* SpawnedActor = GetWorld()->SpawnActor<ARiverPickupActor>(RiverPickupActorTemplate, Location, Rotation, SpawnParameters);
+				SpawnedActor->RiverActor = RiverActor;
+			}
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("ARiverPickupSpawnerActor::BeginPlay - RiverActor is null. Please define the property in the UE editor within the world"));
+		}
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("ARiverPickupSpawnerActor::BeginPlay - RiverActorTemplate is null. Please define the property in the UE editor"));
