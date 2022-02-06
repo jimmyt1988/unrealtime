@@ -12,8 +12,11 @@ void AMainGameHUD::ShowHUD()
 		HUDUserWidget = CreateWidget<UHUDUserWidget>(GetWorld(), HUDUserWidgetClass);
 	}
 
-	if (!HUDUserWidget->IsInViewport())
+	if (HUDUserWidget)
 	{
-		HUDUserWidget->AddToPlayerScreen();
+		if (!HUDUserWidget->IsInViewport())
+		{
+			HUDUserWidget->AddToPlayerScreen();
+		}
 	}
 }
